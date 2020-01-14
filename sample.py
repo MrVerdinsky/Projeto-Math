@@ -72,16 +72,15 @@ def main():
                 if (event.key == pygame.K_ESCAPE):
                     return
 
-            # Rotates object arround its Y axis to the right
+            # Rotates object around its Y axis to the right
             if pygame.key.get_pressed()[pygame.K_RIGHT] == True:
                 angle = 50
                 axis = vector3(0,1,0)
 
                 # Keep the object from rotating if there's an attempt to turn it to oppisite direction
                 # Or rotates the object to the opposite direction
-                # não sei maltinha, decidam o que acham melhor
                 if pygame.key.get_pressed()[pygame.K_LEFT] == True:
-                    angle = -50
+                    angle = 0
                 # Rotates object arrouns its Y and Z axis to the right and up simultaneously
                 elif pygame.key.get_pressed()[pygame.K_UP] == True:
                     angle = 50
@@ -89,7 +88,7 @@ def main():
                 # Rotates object arrouns its Y and Z axis to the right and down simultaneously
                 elif pygame.key.get_pressed()[pygame.K_DOWN] == True:
                     axis = vector3(1,1,0)
-
+            
 
             # Rotates object arround its Y axis to the left
             elif pygame.key.get_pressed()[pygame.K_LEFT] == True:
@@ -111,8 +110,7 @@ def main():
                 elif pygame.key.get_pressed()[pygame.K_DOWN] == True:
                     angle = -50
                     axis = vector3(0,1,1)
-
-
+       
             # Rotates object up arround its X axis 
             elif pygame.key.get_pressed()[pygame.K_UP] == True:
                 angle = -50
@@ -134,33 +132,120 @@ def main():
             elif pygame.key.get_pressed()[pygame.K_PAGEUP] == True:
                 angle = -50
                 axis = vector3(0, 0, 1)
-
+            else:
+                angle = 0
             # Moves object to the right
-            elif pygame.key.get_pressed()[pygame.K_d] == True:
-                move_horizontal += move_value
-                # Stops the object if there's an attempt to move it to the opposite direction
+            if pygame.key.get_pressed()[pygame.K_d] == True:
+                move_horizontal = move_value
+               # Stops the object if there's an attempt to move it to the opposite direction
                 if pygame.key.get_pressed()[pygame.K_a] == True:
-                    move_horizontal = object_still
-
+                    move_horizontal = object_still 
+                elif pygame.key.get_pressed()[pygame.K_w] == True:
+                    move_vertical = move_value
+                
+                elif pygame.key.get_pressed()[pygame.K_s] == True:
+                    move_vertical = -move_value
+                elif pygame.key.get_pressed()[pygame.K_e] == True:
+                    move_depth = move_value
+                    if pygame.key.get_pressed()[pygame.K_q] == True:
+                        move_depth = 0
+                elif pygame.key.get_pressed()[pygame.K_q] == True:
+                    move_depth = -move_value
+                    if pygame.key.get_pressed()[pygame.K_e] == True:
+                        move_depth = 0
+                else:
+                    move_vertical = 0
+                    move_depth = 0
+            
+                
             # Moves object to the left
             elif pygame.key.get_pressed()[pygame.K_a] == True:
-                move_horizontal -= move_value
+                move_horizontal = -move_value
+                if pygame.key.get_pressed()[pygame.K_d] == True:
+                    move_horizontal = object_still
+
+                elif pygame.key.get_pressed()[pygame.K_w] == True:
+                    move_vertical = move_value
+                
+                elif pygame.key.get_pressed()[pygame.K_s] == True:
+                    move_vertical = -move_value
+                elif pygame.key.get_pressed()[pygame.K_e] == True:
+                    move_depth = move_value
+                    if pygame.key.get_pressed()[pygame.K_q] == True:
+                        move_depth = 0
+                        
+                elif pygame.key.get_pressed()[pygame.K_q] == True:
+                    move_depth = -move_value
+                    if pygame.key.get_pressed()[pygame.K_e] == True:
+                        move_depth = 0
+                else:
+                    move_vertical = 0
+                    move_depth = 0
+
 
             # Moves object up 
             elif pygame.key.get_pressed()[pygame.K_w] == True:
-                move_vertical += move_value
+                move_vertical = move_value
 
+                if pygame.key.get_pressed()[pygame.K_s] == True:
+                    move_vertical = object_still
+
+                elif pygame.key.get_pressed()[pygame.K_d] == True:
+                    move_horizontal = move_value
+               
+                elif pygame.key.get_pressed()[pygame.K_a] == True:
+                    move_horizontal = -move_value
+
+                elif pygame.key.get_pressed()[pygame.K_e] == True:
+                    move_depth = move_value
+                    if pygame.key.get_pressed()[pygame.K_q] == True:
+                        move_depth = 0
+                elif pygame.key.get_pressed()[pygame.K_q] == True:
+                    move_depth = -move_value
+                    if pygame.key.get_pressed()[pygame.K_e] == True:
+                        move_depth = 0
+                else:
+                    move_horizontal = 0
+                    move_depth = 0
             # Moves object down
             elif pygame.key.get_pressed()[pygame.K_s] == True:
-                move_vertical -= move_value
+                move_vertical = -move_value
+                if pygame.key.get_pressed()[pygame.K_w] == True:
+                    move_vertical = object_still
 
-            # Moves object foward
+                elif pygame.key.get_pressed()[pygame.K_d] == True:
+                    move_horizontal = move_value
+                
+                elif pygame.key.get_pressed()[pygame.K_a] == True:
+                    move_horizontal = -move_value
+
+                elif pygame.key.get_pressed()[pygame.K_e] == True:
+                    move_depth = move_value
+                    if pygame.key.get_pressed()[pygame.K_q] == True:
+                        move_depth = 0
+                elif pygame.key.get_pressed()[pygame.K_q] == True:
+                    move_depth = -move_value
+                    if pygame.key.get_pressed()[pygame.K_e] == True:
+                        move_depth = 0
+
+                
+                else:
+                    move_horizontal = 0
+                    move_depth = 0
+
+            # Moves object forward
             elif pygame.key.get_pressed()[pygame.K_e] == True:
-                move_depth += move_value
-
+                move_depth = move_value
+                if pygame.key.get_pressed()[pygame.K_q]:
+                    move_depth = 0
+                
+                
+                
             # Moves object back
             elif pygame.key.get_pressed()[pygame.K_q] == True:
-                move_depth -= move_value
+                move_depth = -move_value
+                if pygame.key.get_pressed()[pygame.K_e]:
+                    move_depth = 0
             
             # if none of those keys are pressed, the object stays still
             else:
