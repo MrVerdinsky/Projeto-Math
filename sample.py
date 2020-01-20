@@ -9,6 +9,9 @@ from mesh import *
 from material import *
 from color import *
 
+
+
+
 # Define a main function, just to keep things nice and tidy
 def main():
     # Initialize pygame, with the default parameters
@@ -25,6 +28,8 @@ def main():
     scene = Scene("TestScene")
     scene.camera = Camera(False, res_x, res_y)
 
+    pos = pygame.mouse.get_pos()
+
     # Moves the camera back 2 units
     scene.camera.position -= vector3(0,0,2)
 
@@ -32,10 +37,26 @@ def main():
     # This cube has 1 unit of side, and is red
     obj1 = Object3d("TestObject")
     obj1.scale = vector3(1, 1, 1)
-    obj1.position = vector3(0, -1, 0)
-    obj1.mesh = Mesh.create_cube((2, 1, 2))
+    obj1.position = vector3(1.2, 0, 0)
+    obj1.mesh = Mesh.create_cube((1, 1, 1))
     obj1.material = Material(color(1,0,0,1), "TestMaterial1")
     scene.add_object(obj1)
+
+
+    obj3 = Object3d("TestObject")
+    obj3.scale = vector3(1, 1, 1)
+    obj3.position = vector3(-1.2, 1, 0.75)
+    obj3.mesh = Mesh.create_cube((1, 1, 1.5))
+    obj3.material = Material(color(1,0,0,1), "TestMaterial1")
+    scene.add_object(obj3)
+
+    obj5 = Object3d("TestObject")
+    obj5.scale = vector3(1, 1, 1)
+    obj5.position = vector3(-1.2, 1, 0.75)
+    obj5.mesh = Mesh.create_cube((1, 1, 1.5))
+    obj5.material = Material(color(1,0,0,1), "TestMaterial1")
+    scene.add_object(obj5)
+
 
     # Create a second object, and add it as a child of the first object
     # When the first object rotates, this one will also mimic the transform
@@ -45,6 +66,21 @@ def main():
     obj2.material = Material(color(0,1,0,1), "TestMaterial2")
     obj1.add_child(obj2)
 
+
+    obj4 = Object3d("ChildObject")
+    obj4.position += vector3(0, 0.75, 0)
+    obj4.mesh = Mesh.create_cube((0.5, 0.5, 0.5))
+    obj4.material = Material(color(0,1,0,1), "TestMaterial2")
+    obj3.add_child(obj4)
+
+    obj6 = Object3d("ChildObject")
+    obj6.position += vector3(0, 0.75, 0)
+    obj6.mesh = Mesh.create_cube((0.5, 0.5, 0.5))
+    obj6.material = Material(color(0,1,0,1), "TestMaterial2")
+    obj5.add_child(obj6)
+
+
+    
     # Specify the rotation of the object. It will rotate 15 degrees around the axis given, 
     # every second
     angle = 0
@@ -52,6 +88,7 @@ def main():
     axis = vector3(0,1,0)
     axis.normalize()
 
+    
     # Timer
     delta_time = 0
     prev_time = time.time()
@@ -134,30 +171,22 @@ def main():
                 axis = vector3(0, 0, 1)
             else:
                 angle = 0
+            
             # Moves object to the right
             if pygame.key.get_pressed()[pygame.K_d] == True:
                 move_horizontal = move_value
+              
                # Stops the object if there's an attempt to move it to the opposite direction
                 if pygame.key.get_pressed()[pygame.K_a] == True:
                     move_horizontal = object_still 
+                
                 elif pygame.key.get_pressed()[pygame.K_w] == True:
-                    move_vertical = move_value
+                    move_depth = -move_value
                 
                 elif pygame.key.get_pressed()[pygame.K_s] == True:
-                    move_vertical = -move_value
-                elif pygame.key.get_pressed()[pygame.K_e] == True:
-                    move_depth = move_value
-                    if pygame.key.get_pressed()[pygame.K_q] == True:
-                        move_depth = 0
-                elif pygame.key.get_pressed()[pygame.K_q] == True:
-                    move_depth = -move_value
-                    if pygame.key.get_pressed()[pygame.K_e] == True:
-                        move_depth = 0
+                     move_depth = move_value
                 else:
-                    move_vertical = 0
                     move_depth = 0
-            
-                
             # Moves object to the left
             elif pygame.key.get_pressed()[pygame.K_a] == True:
                 move_horizontal = -move_value
@@ -165,53 +194,32 @@ def main():
                     move_horizontal = object_still
 
                 elif pygame.key.get_pressed()[pygame.K_w] == True:
-                    move_vertical = move_value
+                     move_depth = -move_value
                 
                 elif pygame.key.get_pressed()[pygame.K_s] == True:
-                    move_vertical = -move_value
-                elif pygame.key.get_pressed()[pygame.K_e] == True:
-                    move_depth = move_value
-                    if pygame.key.get_pressed()[pygame.K_q] == True:
-                        move_depth = 0
-                        
-                elif pygame.key.get_pressed()[pygame.K_q] == True:
-                    move_depth = -move_value
-                    if pygame.key.get_pressed()[pygame.K_e] == True:
-                        move_depth = 0
+                    move_depth = +move_value
                 else:
-                    move_vertical = 0
                     move_depth = 0
-
-
             # Moves object up 
             elif pygame.key.get_pressed()[pygame.K_w] == True:
-                move_vertical = move_value
+                move_depth = -move_value
 
                 if pygame.key.get_pressed()[pygame.K_s] == True:
-                    move_vertical = object_still
+                   move_depth = 0
 
                 elif pygame.key.get_pressed()[pygame.K_d] == True:
                     move_horizontal = move_value
-               
+                    
                 elif pygame.key.get_pressed()[pygame.K_a] == True:
                     move_horizontal = -move_value
 
-                elif pygame.key.get_pressed()[pygame.K_e] == True:
-                    move_depth = move_value
-                    if pygame.key.get_pressed()[pygame.K_q] == True:
-                        move_depth = 0
-                elif pygame.key.get_pressed()[pygame.K_q] == True:
-                    move_depth = -move_value
-                    if pygame.key.get_pressed()[pygame.K_e] == True:
-                        move_depth = 0
                 else:
                     move_horizontal = 0
-                    move_depth = 0
             # Moves object down
             elif pygame.key.get_pressed()[pygame.K_s] == True:
-                move_vertical = -move_value
+                move_depth = +move_value
                 if pygame.key.get_pressed()[pygame.K_w] == True:
-                    move_vertical = object_still
+                    move_depth = 0
 
                 elif pygame.key.get_pressed()[pygame.K_d] == True:
                     move_horizontal = move_value
@@ -219,37 +227,12 @@ def main():
                 elif pygame.key.get_pressed()[pygame.K_a] == True:
                     move_horizontal = -move_value
 
-                elif pygame.key.get_pressed()[pygame.K_e] == True:
-                    move_depth = move_value
-                    if pygame.key.get_pressed()[pygame.K_q] == True:
-                        move_depth = 0
-                elif pygame.key.get_pressed()[pygame.K_q] == True:
-                    move_depth = -move_value
-                    if pygame.key.get_pressed()[pygame.K_e] == True:
-                        move_depth = 0
-
-                
                 else:
                     move_horizontal = 0
-                    move_depth = 0
 
-            # Moves object forward
-            elif pygame.key.get_pressed()[pygame.K_e] == True:
-                move_depth = move_value
-                if pygame.key.get_pressed()[pygame.K_q]:
-                    move_depth = 0
-                
-                
-                
-            # Moves object back
-            elif pygame.key.get_pressed()[pygame.K_q] == True:
-                move_depth = -move_value
-                if pygame.key.get_pressed()[pygame.K_e]:
-                    move_depth = 0
-            
             # if none of those keys are pressed, the object stays still
             else:
-                angle = 0 
+                
                 move_horizontal = object_still
                 move_vertical = object_still
                 move_depth = object_still

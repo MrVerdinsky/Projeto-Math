@@ -21,7 +21,7 @@ class Mesh:
 
         for poly in self.polygons:
             tpoly = []
-            n = normalized(self)
+            n = vector3.normalize(self)
             camera = (0,0,2)
             product = dot_product(camera, n)
 
