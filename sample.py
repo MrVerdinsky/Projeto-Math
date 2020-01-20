@@ -248,8 +248,7 @@ def main():
                     move_depth = 0
             
             # if none of those keys are pressed, the object stays still
-            else:
-                angle = 0 
+            else: 
                 move_horizontal = object_still
                 move_vertical = object_still
                 move_depth = object_still
