@@ -33,7 +33,7 @@ def main():
     obj1 = Object3d("TestObject")
     obj1.scale = vector3(1, 1, 1)
     obj1.position = vector3(0, -1, 0)
-    obj1.mesh = Mesh.create_cube((1, 1, 1))
+    obj1.mesh = Mesh.create_cube((2, 1, 2))
     obj1.material = Material(color(1,0,0,1), "TestMaterial1")
     scene.add_object(obj1)
 
