@@ -35,14 +35,14 @@ class Mesh:
         if (mesh == None):
             mesh = Mesh("UnknownCube")
 
-        Mesh.create_quad(vector3( size[0] * 0.5, 0, 0), vector3(0, -size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
-        Mesh.create_quad(vector3(-size[0] * 0.5, 0, 0), vector3(0,  size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
+        Mesh.create_quad(vector3( size[0] * 0.5, 0, 0), vector3(0.5, -size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
+        Mesh.create_quad(vector3(-size[0] * 0.5, 0.5, 0), vector3(0,  -size[1] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
 
-        Mesh.create_quad(vector3(0,  size[1] * 0.5, 0), vector3(size[0] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
-        Mesh.create_quad(vector3(0, -size[1] * 0.5, 0), vector3(-size[0] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
+        Mesh.create_quad(vector3(0,  size[1] * 0.5, 0.5), vector3(size[0] * 0.5, 0), vector3(0, 0.5, size[2] * 0.5), mesh)
+        # Mesh.create_quad(vector3(0, -size[1] * 0.5, 0), vector3(-size[0] * 0.5, 0), vector3(0, 0, size[2] * 0.5), mesh)
 
-        Mesh.create_quad(vector3(0, 0,  size[2] * 0.5), vector3(-size[0] * 0.5, 0), vector3(0, size[1] * 0.5, 0), mesh)
-        Mesh.create_quad(vector3(0, 0, -size[2] * 0.5), vector3( size[0] * 0.5, 0), vector3(0, size[1] * 0.5, 0), mesh)
+        # Mesh.create_quad(vector3(0, 0,  size[2] * 0.5), vector3(-size[0] * 0.5, 0), vector3(0, size[1] * 0.5, 0), mesh)
+        # Mesh.create_quad(vector3(0, 0, -size[2] * 0.5), vector3( size[0] * 0.5, 0), vector3(0, size[1] * 0.5, 0), mesh)
 
         return mesh
 
@@ -55,9 +55,36 @@ class Mesh:
         poly.append(origin + axis0 + axis1)
         poly.append(origin + axis0 - axis1)
         poly.append(origin - axis0 - axis1)
-        poly.append(origin - axis0 + axis1)
+        # poly.append(origin - axis0 + axis1)
 
         mesh.polygons.append(poly)
 
         return mesh
+
+ 
+    @staticmethod
+    def create_triPyramid(vert, mesh = None):
+        if (mesh == None):
+            mesh = Mesh("UnknownTrigPyr")
+        
+        mesh.create_triangle(vert[0], vert[1], vert[2], mesh)
+        mesh.create_triangle(vert[0], vert[1], vert[3], mesh)
+        mesh.create_triangle(vert[0], vert[2], vert[3], mesh)
+        mesh.create_triangle(vert[1], vert[2], vert[3], mesh)
+
+        return mesh
+
+    @staticmethod
+    def create_triangle(v1, v2, v3, mesh = None):
+        if (mesh == None):
+            mesh = Mesh("UknownTriangle")
+        poly = []
+        poly.append(v1)
+        poly.append(v2)
+        poly.append(v3)
+
+        mesh.polygons.append(poly)
+
+        return mesh
+
     
